@@ -285,7 +285,7 @@ func (c *client) ReserveTutor(ctx context.Context, from time.Time, margin time.D
 
 	// -- Do reservation --
 
-	if false {
+	if true {
 		timeSlotButtonSelector := fmt.Sprintf(tutorTimeSlotButtonSelector, 1, 1)
 		waitUntilElementLoaded(c.wd, selenium.ByCSSSelector, timeSlotButtonSelector)
 		c.saveCurrentScreenshot(rarejobctlTempDir, "tutor_reservation.png")
