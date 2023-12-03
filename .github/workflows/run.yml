@@ -7,6 +7,8 @@ jobs:
     services:
       selenium:
         image: selenium/standalone-firefox-debug:3.141
+        ports:
+          - 4444:4444
     env:
       RAREJOB_EMAIL: ${{ secrets.RAREJOB_EMAIL }}
       RAREJOB_PASSWORD: ${{ secrets.RAREJOB_PASSWORD }}
@@ -17,7 +19,7 @@ jobs:
         go-version: '1.21'
     - run: |
         go run ./cmd/test/main.go \
-            -selenium-host selenium \
+            -selenium-host localhost \
             -selenium-port 4444 \
             -selenium-browser-name firefox \
     - name: "Upload screenshots"
