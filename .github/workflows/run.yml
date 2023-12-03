@@ -12,6 +12,7 @@ jobs:
     env:
       RAREJOB_EMAIL: ${{ secrets.RAREJOB_EMAIL }}
       RAREJOB_PASSWORD: ${{ secrets.RAREJOB_PASSWORD }}
+      TZ: "Asia/Tokyo"
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v4
