@@ -285,39 +285,41 @@ func (c *client) ReserveTutor(ctx context.Context, from time.Time, margin time.D
 
 	// -- Do reservation --
 
-	timeSlotButtonSelector := fmt.Sprintf(tutorTimeSlotButtonSelector, 1, 1)
-	waitUntilElementLoaded(c.wd, selenium.ByCSSSelector, timeSlotButtonSelector)
-	c.saveCurrentScreenshot(rarejobctlTempDir, "tutor_reservation.png")
-	// TODO(musaprg): Implement to select tutor, not hard-coded
-	timeSlot, err := c.wd.FindElement(selenium.ByCSSSelector, timeSlotButtonSelector)
-	if err != nil {
-		return nil, fmt.Errorf("failed to find time slot button: %w", err)
-	}
-	{
-		text, _ := timeSlot.Text()
-		zap.L().Debug("found time slot button", zap.String("button_text", text))
-	}
-	if err := timeSlot.Click(); err != nil {
-		return nil, fmt.Errorf("failed to click time slot button: %w", err)
-	}
+	if false {
+		timeSlotButtonSelector := fmt.Sprintf(tutorTimeSlotButtonSelector, 1, 1)
+		waitUntilElementLoaded(c.wd, selenium.ByCSSSelector, timeSlotButtonSelector)
+		c.saveCurrentScreenshot(rarejobctlTempDir, "tutor_reservation.png")
+		// TODO(musaprg): Implement to select tutor, not hard-coded
+		timeSlot, err := c.wd.FindElement(selenium.ByCSSSelector, timeSlotButtonSelector)
+		if err != nil {
+			return nil, fmt.Errorf("failed to find time slot button: %w", err)
+		}
+		{
+			text, _ := timeSlot.Text()
+			zap.L().Debug("found time slot button", zap.String("button_text", text))
+		}
+		if err := timeSlot.Click(); err != nil {
+			return nil, fmt.Errorf("failed to click time slot button: %w", err)
+		}
 
-	zap.L().Debug("loading reservation page", zap.String("url", c.getCurrentURL()))
-	waitUntilElementLoaded(c.wd, selenium.ByLinkText, "予約する")
-	c.saveCurrentScreenshot(rarejobctlTempDir, "reservation_page.png")
-	zap.L().Debug("loaded reservation page", zap.String("url", c.getCurrentURL()))
-	reserveButton, err := c.wd.FindElement(selenium.ByLinkText, "予約する")
-	if err != nil {
-		zap.L().Debug("failed to get reserve button", zap.Error(err), zap.String("url", c.getCurrentURL()))
-		return nil, fmt.Errorf("failed to get reserve button: %w", err)
-	}
-	if err := reserveButton.Click(); err != nil {
-		return nil, fmt.Errorf("failed to click reserve button: %w", err)
-	}
+		zap.L().Debug("loading reservation page", zap.String("url", c.getCurrentURL()))
+		waitUntilElementLoaded(c.wd, selenium.ByLinkText, "予約する")
+		c.saveCurrentScreenshot(rarejobctlTempDir, "reservation_page.png")
+		zap.L().Debug("loaded reservation page", zap.String("url", c.getCurrentURL()))
+		reserveButton, err := c.wd.FindElement(selenium.ByLinkText, "予約する")
+		if err != nil {
+			zap.L().Debug("failed to get reserve button", zap.Error(err), zap.String("url", c.getCurrentURL()))
+			return nil, fmt.Errorf("failed to get reserve button: %w", err)
+		}
+		if err := reserveButton.Click(); err != nil {
+			return nil, fmt.Errorf("failed to click reserve button: %w", err)
+		}
 
-	zap.L().Debug("waiting for completion of reservation")
-	waitUntilURLChanged(c.wd, rarejobReservationFinishURL)
-	c.saveCurrentScreenshot(rarejobctlTempDir, "reservation_completed.png")
-	zap.L().Debug("reservation completed")
+		zap.L().Debug("waiting for completion of reservation")
+		waitUntilURLChanged(c.wd, rarejobReservationFinishURL)
+		c.saveCurrentScreenshot(rarejobctlTempDir, "reservation_completed.png")
+		zap.L().Debug("reservation completed")
+	}
 
 	return &Reserve{
 		Name:    tutors[0].Name,
