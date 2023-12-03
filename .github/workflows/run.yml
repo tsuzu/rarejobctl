@@ -16,5 +16,15 @@ jobs:
       with:
         go-version: '1.21'
     - run: |
-        go run ./cmd/test/main.go
-
+        go run ./cmd/test/main.go \
+            -selenium-host selenium \
+            -selenium-port 4444 \
+            -selenium-browser-name firefox \
+    - name: "Upload screenshots"
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: failed-screenshots
+        path: /tmp/rarejobctl
+        retention-days: 1
+        if-no-files-found: ignore
