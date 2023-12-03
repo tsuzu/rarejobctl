@@ -301,6 +301,7 @@ func (c *client) ReserveTutor(ctx context.Context, from time.Time, margin time.D
 		if err := timeSlot.Click(); err != nil {
 			return nil, fmt.Errorf("failed to click time slot button: %w", err)
 		}
+		c.saveCurrentScreenshot(rarejobctlTempDir, "tutor_reservation2.png")
 
 		zap.L().Debug("loading reservation page", zap.String("url", c.getCurrentURL()))
 		waitUntilElementLoaded(c.wd, selenium.ByLinkText, "予約する")

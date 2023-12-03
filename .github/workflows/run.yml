@@ -24,6 +24,7 @@ jobs:
             -selenium-port 4444 \
             -selenium-browser-name firefox \
             -time 23:00 \
+            -max-retry 1 \
             -debug
     - name: "Upload screenshots"
       uses: actions/upload-artifact@v3
