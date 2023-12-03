@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       selenium:
-        image: selenium/standalone-firefox-debug:3.141
+        image: selenium/standalone-chrome:latest
         ports:
           - 4444:4444
     env:
@@ -22,7 +22,7 @@ jobs:
         go run ./cmd/test/main.go \
             -selenium-host localhost \
             -selenium-port 4444 \
-            -selenium-browser-name firefox \
+            -selenium-browser-name chrome \
             -time 23:00 \
             -max-retry 1 \
             -debug
